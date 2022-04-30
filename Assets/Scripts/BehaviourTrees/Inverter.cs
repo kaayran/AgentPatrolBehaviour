@@ -1,33 +1,35 @@
 ﻿using System;
+using UnityEngine;
 
-namespace BehaviourTrees;
-
-public class Inverter : Node
+namespace BehaviourTrees
 {
-    protected readonly Node _node;
-
-    public Inverter(Node node)
+    public class Inverter : Node
     {
-        _node = node;
-    }
+        protected readonly Node _node;
 
-    public override NodeState Evaluate()
-    {
-        switch (_node.NodeState)
+        public Inverter(Node node)
         {
-            case NodeState.Running:
-                _nodeState = NodeState.Running;
-                break;
-            case NodeState.Success:
-                _nodeState = NodeState.Failure;
-                break;
-            case NodeState.Failure:
-                _nodeState = NodeState.Success;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            _node = node;
         }
 
-        return _nodeState;
+        public override NodeState Evaluate()
+        {
+            switch (_node.Evaluate())
+            {
+                case NodeState.Running:
+                    _nodeState = NodeState.Running;
+                    break;
+                case NodeState.Success:
+                    _nodeState = NodeState.Failure;
+                    break;
+                case NodeState.Failure:
+                    _nodeState = NodeState.Success;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return _nodeState;
+        }
     }
 }

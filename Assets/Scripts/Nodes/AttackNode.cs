@@ -1,26 +1,27 @@
 ﻿using Agent;
 using BehaviourTrees;
-using UnityEngine.AI;
+using UnityEngine;
 using Color = UnityEngine.Color;
 
-namespace Nodes;
-
-public class AttackNode : Node
+namespace Nodes
 {
-    private NavMeshAgent _agent;
-    private NonPlayableCharacter _npc;
-
-    public AttackNode(NonPlayableCharacter npc, NavMeshAgent agent)
+    public class AttackNode : Node
     {
-        _npc = npc;
-        _agent = agent;
-    }
+        private NonPlayableCharacter _npc;
 
-    public override NodeState Evaluate()
-    {
-        _agent.isStopped = true;
-        _npc.SetColor(Color.red);
+        public AttackNode(NonPlayableCharacter npc)
+        {
+            _npc = npc;
+        }
 
-        return NodeState.Running;
+        public override NodeState Evaluate()
+        {
+            Debug.Log("AttackNode");
+            
+            _npc.SetColor(Color.red);
+            _npc.Shoot();
+
+            return NodeState.Running;
+        }
     }
 }

@@ -1,28 +1,36 @@
-﻿using Agent;
+﻿using System.Linq;
+using Agent;
 using BehaviourTrees;
 using UnityEngine;
 
-namespace Nodes;
-
-public class RangeNode : Node
+namespace Nodes
 {
-    private NonPlayableCharacter _npc;
-    private Transform _origin;
-    private Transform _target;
-    private float _maxRange;
-
-    public RangeNode(NonPlayableCharacter npc, float maxRange, Transform target, Transform origin)
+    public class RangeNode : Node
     {
-        _maxRange = maxRange;
-        _target = target;
-        _origin = origin;
-        _npc = npc;
-    }
+        private NonPlayableCharacter _npc;
+        private float _maxRange;
 
-    public override NodeState Evaluate()
-    {
-        var distance = Vector3.Distance(_origin.position, _target.position);
+        public RangeNode(NonPlayableCharacter npc, float maxRange)
+        {
+            _maxRange = maxRange;
+            _npc = npc;
+        }
 
-        return distance <= _maxRange ? NodeState.Success : NodeState.Failure;
+        public override NodeState Evaluate()
+        {
+            Debug.Log("RangeNode");
+            var colliders = Physics.OverlapBox(_npc.transform.position, Vector3.one * _maxRange);
+
+            foreach (var collider in colliders)
+            {
+                if (collider.TryGetComponent<Enemy>(out var component))
+                {
+                    Debug.Log(component.name);
+                    return NodeState.Success;
+                }
+            }
+            
+            return NodeState.Failure;
+        }
     }
 }

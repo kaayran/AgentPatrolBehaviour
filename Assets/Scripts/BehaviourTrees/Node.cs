@@ -1,20 +1,21 @@
 ﻿using System;
 
-namespace BehaviourTrees;
-
-[Serializable]
-public abstract class Node
+namespace BehaviourTrees
 {
-    protected NodeState _nodeState;
+    [Serializable]
+    public abstract class Node
+    {
+        protected NodeState _nodeState;
 
-    public NodeState NodeState => _nodeState;
+        public NodeState NodeState => _nodeState;
 
-    public abstract NodeState Evaluate();
-}
+        public abstract NodeState Evaluate();
+    }
 
-public enum NodeState
-{
-    Running,
-    Success,
-    Failure
+    public enum NodeState
+    {
+        Running,
+        Success,
+        Failure
+    }
 }

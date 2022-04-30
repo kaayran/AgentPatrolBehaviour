@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BehaviourTrees;
-
-public class Selector : Node
+namespace BehaviourTrees
 {
-    protected readonly List<Node> _nodes;
-
-    public Selector(List<Node> nodes)
+    public class Selector : Node
     {
-        _nodes = nodes;
-    }
+        protected readonly List<Node> _nodes;
 
-    public override NodeState Evaluate()
-    {
-        foreach (var node in _nodes)
+        public Selector(List<Node> nodes)
         {
-            switch (node.Evaluate())
-            {
-                case NodeState.Running:
-                    _nodeState = NodeState.Running;
-                    return _nodeState;
-                case NodeState.Success:
-                    _nodeState = NodeState.Success;
-                    return _nodeState;
-                case NodeState.Failure:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            _nodes = nodes;
         }
 
-        _nodeState = NodeState.Failure;
-        return _nodeState;
+        public override NodeState Evaluate()
+        {
+            foreach (var node in _nodes)
+            {
+                switch (node.Evaluate())
+                {
+                    case NodeState.Running:
+                        _nodeState = NodeState.Running;
+                        return _nodeState;
+                    case NodeState.Success:
+                        _nodeState = NodeState.Success;
+                        return _nodeState;
+                    case NodeState.Failure:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            _nodeState = NodeState.Failure;
+            return _nodeState;
+        }
     }
 }

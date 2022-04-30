@@ -3,38 +3,38 @@ using BehaviourTrees;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Nodes;
-
-public class RunawayNode : Node
+namespace Nodes
 {
-    private Transform _target;
-    private NavMeshAgent _agent;
-    private float _maxDistance;
-    private NonPlayableCharacter _npc;
-
-    public RunawayNode(NonPlayableCharacter npc, Transform target, NavMeshAgent agent, float maxDistance)
+    public class RunawayNode : Node
     {
-        _npc = npc;
-        _target = target;
-        _agent = agent;
-        _maxDistance = maxDistance;
-    }
+        private NonPlayableCharacter _npc;
+        private Transform _target;
+        private float _maxDistance;
+        private float _speed;
 
-    public override NodeState Evaluate()
-    {
-        _npc.SetColor(Color.blue);
-        var distance = Vector3.Distance(_agent.transform.position, _target.position);
-
-        if (distance > _maxDistance)
+        public RunawayNode(NonPlayableCharacter npc, Transform target, float maxDistance, float speed)
         {
-            _agent.isStopped = false;
-            _agent.SetDestination(_target.position);
-
-            return NodeState.Running;
+            _npc = npc;
+            _target = target;
+            _maxDistance = maxDistance;
+            _speed = speed;
         }
 
-        _agent.isStopped = true;
+        public override NodeState Evaluate()
+        {
+            Debug.Log("RunawayNode");
+            _npc.SetColor(Color.blue);
+            var distance = Vector3.Distance(_npc.transform.position, _target.position);
 
-        return NodeState.Success;
+            if (distance > _maxDistance)
+            {
+                _npc.transform.Translate((_target.position - _npc.transform.position).normalized *
+                                         (_speed * Time.deltaTime));
+
+                return NodeState.Running;
+            }
+            
+            return NodeState.Success;
+        }
     }
 }
