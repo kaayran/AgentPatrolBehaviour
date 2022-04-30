@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BehaviourTrees;
 using Nodes;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Agent
 {
@@ -66,6 +64,11 @@ namespace Agent
         public void Shoot()
         {
             _ammoCount--;
+        }
+
+        public void Reload()
+        {
+            _ammoCount += 1000;
         }
     }
 }

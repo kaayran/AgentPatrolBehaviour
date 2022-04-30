@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Agent;
+﻿using Agent;
 using BehaviourTrees;
 using UnityEngine;
 
@@ -18,18 +17,15 @@ namespace Nodes
 
         public override NodeState Evaluate()
         {
-            Debug.Log("RangeNode");
             var colliders = Physics.OverlapBox(_npc.transform.position, Vector3.one * _maxRange);
 
             foreach (var collider in colliders)
             {
-                if (collider.TryGetComponent<Enemy>(out var component))
-                {
-                    Debug.Log(component.name);
-                    return NodeState.Success;
-                }
+                if (!collider.TryGetComponent<Enemy>(out var component)) continue;
+
+                return NodeState.Success;
             }
-            
+
             return NodeState.Failure;
         }
     }

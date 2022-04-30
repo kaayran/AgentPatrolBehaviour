@@ -1,6 +1,5 @@
 ﻿using Agent;
 using BehaviourTrees;
-using UnityEngine;
 
 namespace Nodes
 {
@@ -15,7 +14,6 @@ namespace Nodes
 
         public override NodeState Evaluate()
         {
-            Debug.Log("AmmoNode");
             return _npc.GetCurrentAmmo() > 0 ? NodeState.Success : NodeState.Failure;
         }
     }

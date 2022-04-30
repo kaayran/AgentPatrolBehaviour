@@ -1,6 +1,5 @@
 ﻿using Agent;
 using BehaviourTrees;
-using UnityEngine;
 using Color = UnityEngine.Color;
 
 namespace Nodes
@@ -16,8 +15,6 @@ namespace Nodes
 
         public override NodeState Evaluate()
         {
-            Debug.Log("AttackNode");
-            
             _npc.SetColor(Color.red);
             _npc.Shoot();
 
