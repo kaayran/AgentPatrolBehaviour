@@ -38,7 +38,6 @@ namespace Nodes
 
             _agent.isStopped = true;
             _target = NavPointGenerator.GetRandomPoint();
-            Debug.Log(_target);
             _npc.Reload();
 
             return NodeState.Success;

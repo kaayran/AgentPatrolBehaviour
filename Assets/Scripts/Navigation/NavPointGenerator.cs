@@ -18,7 +18,6 @@ namespace Navigation
             _sizeX = bounds.size.x;
             _sizeY = 1f;
             _sizeZ = bounds.size.z;
-            Debug.Log($"{_sizeX}, {_sizeY}, {_sizeZ}");
         }
 
         public static Vector3 GetRandomPoint()

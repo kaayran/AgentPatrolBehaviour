@@ -24,7 +24,6 @@ namespace Agent
         private void Update()
         {
             var distance = Vector3.Distance(_agent.transform.position, _target);
-            Debug.Log(distance);
 
             if (distance > _maxDistance)
             {
@@ -35,7 +34,6 @@ namespace Agent
             {
                 _agent.isStopped = true;
                 _target = NavPointGenerator.GetRandomPoint();
-                Debug.Log(_target);
             }
         }
     }
