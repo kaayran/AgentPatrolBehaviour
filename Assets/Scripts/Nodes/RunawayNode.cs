@@ -1,43 +1,43 @@
 ﻿using Agent;
 using BehaviourTrees;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Nodes
 {
     public class RunawayNode : Node
     {
-        private NonPlayableCharacter _npc;
-        private Transform _target;
-        private float _maxDistance;
-        private float _speed;
-        private bool _isRebased = false;
+        private readonly NonPlayableCharacter _npc;
+        private readonly NavMeshAgent _agent;
+        private readonly Transform _target;
+        private readonly float _maxDistance;
 
-        public RunawayNode(NonPlayableCharacter npc, Transform target, float maxDistance, float speed)
+        public RunawayNode(NonPlayableCharacter npc, Transform target, float maxDistance)
         {
             _npc = npc;
             _target = target;
             _maxDistance = maxDistance;
-            _speed = speed;
+            _agent = npc.GetAgent();
         }
 
         public override NodeState Evaluate()
         {
             _npc.SetColor(Color.blue);
-            var distance = Vector3.Distance(_npc.transform.position, _target.position);
 
-            if (!(distance > _maxDistance) && _isRebased == false)
+            var distance = Vector3.Distance(_agent.transform.position, _target.transform.position);
+
+            if (distance > _maxDistance)
             {
-                _isRebased = true;
-                _npc.Reload();
-                _target.transform.position *= 2;
-                return NodeState.Success;
+                _agent.isStopped = false;
+                _agent.SetDestination(_target.transform.position);
+
+                return NodeState.Running;
             }
 
-            var transformPosition = _target.position - _npc.transform.position;
-            _npc.transform.Translate(transformPosition.normalized * (_speed * Time.deltaTime));
+            _agent.isStopped = true;
+            _npc.Reload();
 
-            _isRebased = false;
-            return NodeState.Running;
+            return NodeState.Success;
         }
     }
 }

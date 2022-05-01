@@ -6,18 +6,18 @@ namespace Nodes
 {
     public class RangeNode : Node
     {
-        private NonPlayableCharacter _npc;
-        private float _maxRange;
+        private readonly NonPlayableCharacter _npc;
+        private readonly float _detectionRange;
 
-        public RangeNode(NonPlayableCharacter npc, float maxRange)
+        public RangeNode(NonPlayableCharacter npc, float detectionRange)
         {
-            _maxRange = maxRange;
+            _detectionRange = detectionRange;
             _npc = npc;
         }
 
         public override NodeState Evaluate()
         {
-            var colliders = Physics.OverlapBox(_npc.transform.position, Vector3.one * _maxRange);
+            var colliders = Physics.OverlapBox(_npc.transform.position, Vector3.one * _detectionRange);
 
             foreach (var collider in colliders)
             {

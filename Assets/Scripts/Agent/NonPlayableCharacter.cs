@@ -2,30 +2,36 @@
 using BehaviourTrees;
 using Nodes;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Agent
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class NonPlayableCharacter : MonoBehaviour
     {
         [SerializeField] private int _ammoCount;
         [SerializeField] private Transform _target;
         [SerializeField] private float _maxDistance;
         [SerializeField] private float _maxRange;
-    
-        private Node _root;
-        private Material _material;
         [SerializeField] private float _speed;
+
+        private NavMeshAgent _agent;
+        private Material _material;
+        private Node _root;
 
         private void Start()
         {
             _material = GetComponent<MeshRenderer>().material;
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = _speed;
+            
             ConstructTree();
         }
 
         private void Update()
         {
             _root.Evaluate();
-            
+
             if (_root.NodeState == NodeState.Failure)
             {
                 _material.color = Color.yellow;
@@ -36,7 +42,7 @@ namespace Agent
         {
             var ammoNode = new AmmoNode(this);
             var notAmmoNode = new Inverter(ammoNode);
-            var runawayNode = new RunawayNode(this, _target, _maxDistance, _speed);
+            var runawayNode = new RunawayNode(this, _target, _maxDistance);
             var attackNode = new AttackNode(this);
             var rangeNode = new RangeNode(this, _maxRange);
 
@@ -69,6 +75,11 @@ namespace Agent
         public void Reload()
         {
             _ammoCount += 1000;
+        }
+
+        public NavMeshAgent GetAgent()
+        {
+            return _agent;
         }
     }
 }

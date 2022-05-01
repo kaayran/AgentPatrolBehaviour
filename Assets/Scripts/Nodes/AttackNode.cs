@@ -6,7 +6,7 @@ namespace Nodes
 {
     public class AttackNode : Node
     {
-        private NonPlayableCharacter _npc;
+        private readonly NonPlayableCharacter _npc;
 
         public AttackNode(NonPlayableCharacter npc)
         {

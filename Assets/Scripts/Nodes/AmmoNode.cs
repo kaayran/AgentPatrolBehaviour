@@ -5,7 +5,7 @@ namespace Nodes
 {
     public class AmmoNode : Node
     {
-        private NonPlayableCharacter _npc;
+        private readonly NonPlayableCharacter _npc;
 
         public AmmoNode(NonPlayableCharacter npc)
         {
