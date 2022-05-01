@@ -22,7 +22,9 @@ namespace Nodes
             foreach (var collider in colliders)
             {
                 if (!collider.TryGetComponent<Enemy>(out var component)) continue;
-
+                if (component.gameObject == _npc.gameObject) continue;
+                _npc.SetCurrentEnemy(component);
+                
                 return NodeState.Success;
             }
 

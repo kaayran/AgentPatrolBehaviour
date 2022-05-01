@@ -13,22 +13,26 @@ namespace Agent
     {
         public Action EnterBase;
         public Action ExitBase;
-
+        
         [SerializeField] private int _ammoCount;
         [SerializeField] private float _maxDistance;
         [SerializeField] private float _maxRange;
         [SerializeField] private float _speed;
         [SerializeField] private float _timeToSleep;
+        [SerializeField] private MeshRenderer _meshRenderer;
 
         private int _maxAmmo;
         private float _remainTime;
         private NavMeshAgent _agent;
         private Material _material;
         private Node _root;
+        private Enemy _currentEnemy;
+        private Enemy _enemy;
 
         private void Start()
         {
-            _material = GetComponent<MeshRenderer>().material;
+            _enemy = GetComponent<Enemy>();
+            _material = _meshRenderer.material;
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _speed;
             _remainTime = _timeToSleep;
@@ -89,6 +93,12 @@ namespace Agent
         public void Shoot()
         {
             _ammoCount--;
+            _currentEnemy.Damage();
+        }
+        
+        public void Heal()
+        {
+            _enemy.Heal();
         }
 
         public void Reload()
@@ -124,6 +134,11 @@ namespace Agent
         public void RefreshSleepTime()
         {
             _remainTime = _timeToSleep;
+        }
+
+        public void SetCurrentEnemy(Enemy enemy)
+        {
+            _currentEnemy = enemy;
         }
     }
 }

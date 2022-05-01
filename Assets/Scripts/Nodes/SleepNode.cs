@@ -19,6 +19,7 @@ namespace Nodes
             {
                 Debug.Log("Sleeping");
                 _npc.SetColor(Color.white);
+                _npc.Heal();
                 return NodeState.Running;
             }
             

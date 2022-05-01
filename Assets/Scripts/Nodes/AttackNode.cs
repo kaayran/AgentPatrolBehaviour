@@ -18,6 +18,8 @@ namespace Nodes
             _npc.SetColor(Color.red);
             _npc.Shoot();
 
+            _npc.GetAgent().isStopped = true;
+
             return NodeState.Running;
         }
     }
