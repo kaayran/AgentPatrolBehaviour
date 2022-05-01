@@ -10,7 +10,6 @@ namespace Agent
     public class NonPlayableCharacter : MonoBehaviour
     {
         [SerializeField] private int _ammoCount;
-        [SerializeField] private Transform _target;
         [SerializeField] private float _maxDistance;
         [SerializeField] private float _maxRange;
         [SerializeField] private float _speed;
@@ -42,7 +41,7 @@ namespace Agent
         {
             var ammoNode = new AmmoNode(this);
             var notAmmoNode = new Inverter(ammoNode);
-            var runawayNode = new RunawayNode(this, _target, _maxDistance);
+            var runawayNode = new RunawayNode(this, _maxDistance);
             var attackNode = new AttackNode(this);
             var rangeNode = new RangeNode(this, _maxRange);
 
@@ -74,7 +73,7 @@ namespace Agent
 
         public void Reload()
         {
-            _ammoCount += 1000;
+            _ammoCount += 100;
         }
 
         public NavMeshAgent GetAgent()
