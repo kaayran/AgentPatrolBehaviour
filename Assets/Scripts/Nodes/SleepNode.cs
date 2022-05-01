@@ -15,16 +15,11 @@ namespace Nodes
 
         public override NodeState Evaluate()
         {
-            if (_npc.GetRemainTime() > 0)
-            {
-                Debug.Log("Sleeping");
-                _npc.SetColor(Color.white);
-                _npc.Heal();
-                return NodeState.Running;
-            }
-            
-            Debug.Log("WakeUp");
-            return NodeState.Failure;
+            if (!(_npc.GetRemainTime() > 0)) return NodeState.Failure;
+
+            _npc.SetColor(Color.white);
+            _npc.Heal();
+            return NodeState.Running;
         }
     }
 }

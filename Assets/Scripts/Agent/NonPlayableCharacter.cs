@@ -51,13 +51,11 @@ namespace Agent
         private void OnTriggerEnter(Collider other)
         {
             EnterBase?.Invoke();
-            Debug.Log($"On Base: {other.name}");
         }
 
         private void OnTriggerExit(Collider other)
         {
             ExitBase?.Invoke();
-            Debug.Log($"Going From Base: {other.name}");
         }
 
         private void ConstructTree()
@@ -109,16 +107,6 @@ namespace Agent
         public NavMeshAgent GetAgent()
         {
             return _agent;
-        }
-
-        public float GetTimeToSleep()
-        {
-            return _timeToSleep;
-        }
-
-        public float GetSpeed()
-        {
-            return _speed;
         }
 
         public float GetMaxDistance()

@@ -29,22 +29,6 @@ namespace Agent
             HealthUpdate?.Invoke(_maxHealth);
         }
 
-        private void Update()
-        {
-            // var distance = Vector3.Distance(_agent.transform.position, _target);
-            //
-            // if (distance > _maxDistance)
-            // {
-            //     _agent.isStopped = false;
-            //     _agent.SetDestination(_target);
-            // }
-            // else
-            // {
-            //     _agent.isStopped = true;
-            //     _target = NavPointGenerator.GetRandomPoint();
-            // }
-        }
-
         public void Damage()
         {
             _health--;

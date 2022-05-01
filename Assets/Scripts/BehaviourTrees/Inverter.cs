@@ -13,20 +13,13 @@ namespace BehaviourTrees
 
         public override NodeState Evaluate()
         {
-            switch (_node.Evaluate())
+            _nodeState = _node.Evaluate() switch
             {
-                case NodeState.Running:
-                    _nodeState = NodeState.Running;
-                    break;
-                case NodeState.Success:
-                    _nodeState = NodeState.Failure;
-                    break;
-                case NodeState.Failure:
-                    _nodeState = NodeState.Success;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                NodeState.Running => NodeState.Running,
+                NodeState.Success => NodeState.Failure,
+                NodeState.Failure => NodeState.Success,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
             return _nodeState;
         }

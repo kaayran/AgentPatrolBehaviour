@@ -32,12 +32,10 @@ namespace Nodes
         {
             if (_isOnBase)
             {
-                Debug.Log("I'm On Base");
                 _npc.SetColor(Color.black);
                 return NodeState.Success;
             }
 
-            Debug.Log("I'm Not On Base");
             return NodeState.Failure;
         }
     }

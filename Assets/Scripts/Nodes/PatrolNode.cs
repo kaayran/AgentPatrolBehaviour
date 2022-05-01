@@ -28,7 +28,6 @@ namespace Nodes
 
             if (distance > _maxDistance)
             {
-                Debug.Log("OnPatrol");
                 _npc.SetColor(Color.yellow);
                 _agent.isStopped = false;
                 _agent.SetDestination(_target);
@@ -36,7 +35,6 @@ namespace Nodes
                 return NodeState.Running;
             }
 
-            Debug.Log("GetOnPoint");
             _agent.isStopped = true;
             _target = NavPointGenerator.GetRandomPoint();
 

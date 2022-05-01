@@ -4,7 +4,7 @@ namespace BehaviourTrees
 {
     public class Random : Node
     {
-        private List<Node> _nodes;
+        private readonly List<Node> _nodes;
 
         public Random(List<Node> nodes)
         {
