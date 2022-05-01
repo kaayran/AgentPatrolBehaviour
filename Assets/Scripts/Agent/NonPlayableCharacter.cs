@@ -4,6 +4,7 @@ using BehaviourTrees;
 using Nodes;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = BehaviourTrees.Random;
 
 namespace Agent
 {
@@ -19,6 +20,7 @@ namespace Agent
         [SerializeField] private float _speed;
         [SerializeField] private float _timeToSleep;
 
+        private int _maxAmmo;
         private float _remainTime;
         private NavMeshAgent _agent;
         private Material _material;
@@ -30,7 +32,8 @@ namespace Agent
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _speed;
             _remainTime = _timeToSleep;
-            
+            _maxAmmo = _ammoCount;
+
             SetColor(Color.yellow);
 
             ConstructTree();
@@ -46,7 +49,7 @@ namespace Agent
             EnterBase?.Invoke();
             Debug.Log($"On Base: {other.name}");
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             ExitBase?.Invoke();
@@ -66,7 +69,8 @@ namespace Agent
 
             var runawaySequence = new Sequence(new List<Node> {notAmmoNode, runawayNode});
             var attackSequence = new Sequence(new List<Node> {rangeNode, attackNode});
-            var startSequence = new Sequence(new List<Node> {startNode, sleepNode});
+            var randomSelector = new Random(new List<Node> {sleepNode, patrolNode});
+            var startSequence = new Sequence(new List<Node> {startNode, randomSelector});
             var patrolSelector = new Selector(new List<Node> {startSequence, patrolNode});
 
             _root = new Selector(new List<Node> {runawaySequence, attackSequence, patrolSelector});
@@ -89,7 +93,7 @@ namespace Agent
 
         public void Reload()
         {
-            _ammoCount += 100;
+            _ammoCount = _maxAmmo;
         }
 
         public NavMeshAgent GetAgent()
@@ -116,10 +120,10 @@ namespace Agent
         {
             return _remainTime--;
         }
+
         public void RefreshSleepTime()
         {
             _remainTime = _timeToSleep;
         }
-        
     }
 }

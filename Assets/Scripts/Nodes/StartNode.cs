@@ -19,11 +19,13 @@ namespace Nodes
         private void OnEnterBase()
         {
             _isOnBase = true;
+            _npc.RefreshSleepTime();
         }
 
         private void OnExitBase()
         {
             _isOnBase = false;
+            _npc.RefreshSleepTime();
         }
 
         public override NodeState Evaluate()
@@ -36,7 +38,6 @@ namespace Nodes
             }
 
             Debug.Log("I'm Not On Base");
-            _npc.RefreshSleepTime();
             return NodeState.Failure;
         }
     }
